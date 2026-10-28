@@ -2,17 +2,19 @@ package dev.miniswitch.miniswitch;
 
 import org.jpos.iso.ISOPackager;
 import org.jpos.iso.packager.ISO87BPackager;
-import org.jpos.iso.ServerChannel;
 import org.jpos.iso.channel.ASCIIChannel;
 import org.jpos.iso.ISOMsg;
 import org.jpos.iso.ISOException;
 import java.io.IOException;
+import org.jpos.iso.BaseChannel;
+import java.net.SocketException;
 
 public class MiniSwitchClient {
     private final ISOPackager packager = new ISO87BPackager();
-    private ServerChannel channel = new ASCIIChannel("localhost", 5000, packager);
+    private BaseChannel channel = new ASCIIChannel("localhost", 5000, packager);
 
-    public void sendMessage(ISOMsg m) {
+    public void sendMessage(ISOMsg m) throws SocketException {
+        this.channel.setTimeout(7000);
         try{
             this.channel.connect();
             this.channel.send(m);
@@ -42,6 +44,10 @@ public class MiniSwitchClient {
         isoMsg.set(11, "123456");      // STAN
         isoMsg.set(41, "TERM1");       // Terminal ID
 
-        client.sendMessage(isoMsg);
+        try {
+            client.sendMessage(isoMsg);
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
     }
 }
