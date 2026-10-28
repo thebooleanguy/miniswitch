@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MiniswitchApplication {
+public class MiniSwitchApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MiniswitchApplication.class, args);
+		SpringApplication.run(MiniSwitchApplication.class, args);
 	}
 
 }
