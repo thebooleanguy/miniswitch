@@ -7,14 +7,17 @@ public class TransactionRequest {
     private String stan;
     private String terminalId;
     private String accountNumber;
+    private String destinationBankCode;;
 
-    public TransactionRequest(String mti, String processingCode, long transactionAmount, String stan, String terminalId, String accountNumber) {
+    public TransactionRequest(String mti, String processingCode, long transactionAmount, 
+        String stan, String terminalId, String accountNumber, String destinationBankCode) {
         this.mti = mti;
         this.processingCode = processingCode;
         this.transactionAmount = transactionAmount;
         this.stan = stan;
         this.terminalId = terminalId;
         this.accountNumber = accountNumber;
+        this.destinationBankCode = destinationBankCode;
     }
 
     public String getMti() {
@@ -63,6 +66,14 @@ public class TransactionRequest {
 
     public void setAccountNumber(String accountNumber) {
         this.accountNumber = accountNumber;
+    }
+
+    public String getDestinationBankCode() {
+        return destinationBankCode;
+    }
+
+    public void setDestinationBankCode(String destinationBankCode) {
+        this.destinationBankCode = destinationBankCode;
     }
 }
 

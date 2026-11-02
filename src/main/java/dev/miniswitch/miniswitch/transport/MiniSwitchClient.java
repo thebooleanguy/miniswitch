@@ -44,6 +44,7 @@ public class MiniSwitchClient {
         isoMsg.set(11, "123456");      // STAN
         isoMsg.set(41, "TERM1");       // Terminal ID
         isoMsg.set(102, "100001");       // Account Number
+        isoMsg.set(100, "001001");       // Destination Bank Code
 
         try {
             client.sendMessage(isoMsg);

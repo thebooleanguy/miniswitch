@@ -33,7 +33,8 @@ public class MiniSwitchListener implements ISORequestListener{
                 return false;
             }
 
-            if (!m.hasField(3) || !m.hasField(4) || !m.hasField(11) || !m.hasField(41) || !m.hasField(102)) {
+            if (!m.hasField(3) || !m.hasField(4) || !m.hasField(11) || !m.hasField(41) 
+                || !m.hasField(102) || !m.hasField(100)) {
                 System.out.println("Missing required fields, ignoring...");
                 r.set(39, "12");
                 source.send(r);
@@ -45,9 +46,12 @@ public class MiniSwitchListener implements ISORequestListener{
             System.out.println("Field 11: " + m.getString(11));
             System.out.println("Field 41: " + m.getString(41));
             System.out.println("Field 102: " + m.getString(102));
+            System.out.println("Field 100: " + m.getString(100));
+
 
             TransactionRequest request = new TransactionRequest(m.getMTI(), m.getString(3), 
-                Long.parseLong(m.getString(4)), m.getString(11), m.getString(41), m.getString(102));
+                Long.parseLong(m.getString(4)), m.getString(11), m.getString(41), 
+                m.getString(102), m.getString(100));
 
             TransactionResult result = transactionService.processTransaction(request);
 

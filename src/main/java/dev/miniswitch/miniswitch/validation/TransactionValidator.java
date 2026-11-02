@@ -17,6 +17,7 @@ public class TransactionValidator {
         String stan = request.getStan();
         String terminalId = request.getTerminalId();
         String accountNumber = request.getAccountNumber();
+        String destinationBankCode = request.getDestinationBankCode();
 
         if(!("0200".equals(mti))){
             return false;
@@ -39,6 +40,10 @@ public class TransactionValidator {
         }
 
         if(accountNumber == null || accountNumber.isBlank()) {
+            return false;
+        }
+
+        if(destinationBankCode == null || destinationBankCode.isBlank()) {
             return false;
         }
 
