@@ -1,7 +1,10 @@
 package dev.miniswitch.miniswitch.validation;
 
+import org.springframework.stereotype.Component;
+
 import dev.miniswitch.miniswitch.model.TransactionRequest;
 
+@Component 
 public class TransactionValidator {
     public boolean isValid(TransactionRequest request) {
         if(request == null) {
