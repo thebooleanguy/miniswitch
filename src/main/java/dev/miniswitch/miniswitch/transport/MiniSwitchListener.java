@@ -35,7 +35,9 @@ public class MiniSwitchListener implements ISORequestListener{
 
             if (!m.hasField(3) || !m.hasField(4) || !m.hasField(11) || !m.hasField(41) || !m.hasField(102)) {
                 System.out.println("Missing required fields, ignoring...");
-                return false;
+                r.set(39, "12");
+                source.send(r);
+                return true;
             }
 
             System.out.println("Field 3: " + m.getString(3));
@@ -79,7 +81,14 @@ public class MiniSwitchListener implements ISORequestListener{
             return false;
         } catch (NumberFormatException e) {
             System.out.println("Invalid transaction amount format");
-            return false;
+            try{
+                r.set(39, "12");
+                source.send(r);
+                return true;
+            } catch (ISOException | IOException ex) {
+                ex.printStackTrace();
+                return false;
+            }
         }
     }
 
