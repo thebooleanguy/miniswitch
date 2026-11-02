@@ -3,7 +3,6 @@ package dev.miniswitch.miniswitch.transport;
 import org.jpos.iso.ISOMsg;
 import org.jpos.iso.ISORequestListener;
 import org.jpos.iso.ISOSource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.jpos.iso.ISOException;
 import java.io.IOException;
@@ -19,10 +18,12 @@ public class MiniSwitchListener implements ISORequestListener{
     }
 
     public boolean process(ISOSource source, ISOMsg m) {
-
         ISOMsg r = new ISOMsg();
 
-        if ("0200".equals(m.getMTI())) {
+        try {
+            System.out.println("\n\nMTI: " + m.getMTI());    
+            
+            if ("0200".equals(m.getMTI())) {
                 System.out.println("Processing transaction request...");
                 r = (ISOMsg) m.clone();
                 r.setResponseMTI();
@@ -30,11 +31,6 @@ public class MiniSwitchListener implements ISORequestListener{
                 System.out.println("Received non-transaction request, ignoring...");
                 return false;
             }
-
-        try {
-            System.out.println("\n\nMTI: " + m.getMTI());    
-            
-            
 
             if (!m.hasField(3) || !m.hasField(4) || !m.hasField(11) || !m.hasField(41)) {
                 System.out.println("Missing required fields, ignoring...");
