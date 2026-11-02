@@ -1,4 +1,4 @@
-package dev.miniswitch.miniswitch;
+package dev.miniswitch.miniswitch.transport;
 
 import org.jpos.iso.ISOPackager;
 import org.jpos.iso.packager.ISO87BPackager;

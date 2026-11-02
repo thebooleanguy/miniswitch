@@ -1,4 +1,4 @@
-package dev.miniswitch.miniswitch;
+package dev.miniswitch.miniswitch.transport;
 
 import org.jpos.iso.ISOMsg;
 import org.jpos.iso.ISORequestListener;

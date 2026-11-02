@@ -1,5 +1,5 @@
 
-package dev.miniswitch.miniswitch;
+package dev.miniswitch.miniswitch.iso8583;
 
 import org.jpos.iso.ISOException;
 import org.jpos.iso.ISOMsg;
