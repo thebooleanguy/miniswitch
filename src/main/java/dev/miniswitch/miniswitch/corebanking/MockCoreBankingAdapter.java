@@ -2,14 +2,17 @@ package dev.miniswitch.miniswitch.corebanking;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.springframework.stereotype.Component;
 
+@Component
 public class MockCoreBankingAdapter {
-    MockAccount accountOne = new MockAccount("100001",500000);
-    MockAccount accountTwo = new MockAccount("100002",150000);
 
-    Map<String, MockAccount> accounts = new HashMap<>();
+    private Map<String, MockAccount> accounts = new HashMap<>();
 
     public MockCoreBankingAdapter() {
+        MockAccount accountOne = new MockAccount("100001",500000);
+        MockAccount accountTwo = new MockAccount("100002",150000);
+
         accounts.put(accountOne.getAccountNumber(), accountOne);
         accounts.put(accountTwo.getAccountNumber(), accountTwo);
     }
@@ -25,7 +28,7 @@ public class MockCoreBankingAdapter {
             return false;
         } else {}
 
-        return accounts.get(accountNumber).getBalance() >= amount;
+        return account.getBalance() >= amount;
     }
 
     public boolean debit(String accountNumber, long amount) {
