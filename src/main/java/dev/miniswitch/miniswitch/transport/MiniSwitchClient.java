@@ -43,6 +43,7 @@ public class MiniSwitchClient {
         isoMsg.set(4, "000000250000"); // Transaction Amount
         isoMsg.set(11, "123456");      // STAN
         isoMsg.set(41, "TERM1");       // Terminal ID
+        isoMsg.set(102, "ACC1");       // Account Number
 
         try {
             client.sendMessage(isoMsg);

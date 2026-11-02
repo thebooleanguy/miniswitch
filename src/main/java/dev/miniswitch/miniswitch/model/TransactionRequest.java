@@ -6,13 +6,15 @@ public class TransactionRequest {
     private long transactionAmount;  // Amount in minor currency units
     private String stan;
     private String terminalId;
+    private String accountNumber;
 
-    public TransactionRequest(String mti, String processingCode, long transactionAmount, String stan, String terminalId) {
+    public TransactionRequest(String mti, String processingCode, long transactionAmount, String stan, String terminalId, String accountNumber) {
         this.mti = mti;
         this.processingCode = processingCode;
         this.transactionAmount = transactionAmount;
         this.stan = stan;
         this.terminalId = terminalId;
+        this.accountNumber = accountNumber;
     }
 
     public String getMti() {
@@ -53,6 +55,14 @@ public class TransactionRequest {
 
     public void setTerminalId(String terminalId) {
         this.terminalId = terminalId;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
     }
 }
 
