@@ -17,13 +17,19 @@ public class MiniSwitchServer {
     private ISOServer server;
     private Thread serverThread;
 
+    private final MiniSwitchListener miniSwitchListener;
+
+    public MiniSwitchServer(MiniSwitchListener miniSwitchListener) {
+        this.miniSwitchListener = miniSwitchListener;
+    }
+
     @PostConstruct
     public void start() {
         try {
             ISOPackager packager = new ISO87BPackager();
             ServerChannel channel = new ASCIIChannel(packager);
             server = new ISOServer(5000, channel, new ThreadPool(1, 10));
-            server.addISORequestListener(new MiniSwitchListener());
+            server.addISORequestListener(miniSwitchListener);
             serverThread = new Thread(server);
             serverThread.start();
             System.out.println("Starting Miniswitch server on port 5000...");
