@@ -8,6 +8,7 @@ import org.jpos.iso.ISOException;
 import java.io.IOException;
 import dev.miniswitch.miniswitch.service.TransactionService;
 import dev.miniswitch.miniswitch.model.TransactionRequest;
+import dev.miniswitch.miniswitch.model.TransactionResult;
 
 @Component 
 public class MiniSwitchListener implements ISORequestListener{
@@ -34,9 +35,7 @@ public class MiniSwitchListener implements ISORequestListener{
 
             if (!m.hasField(3) || !m.hasField(4) || !m.hasField(11) || !m.hasField(41) || !m.hasField(102)) {
                 System.out.println("Missing required fields, ignoring...");
-                r.set(39, "12"); // Invalid transaction
-                source.send(r);
-                return true;
+                return false;
             }
 
             System.out.println("Field 3: " + m.getString(3));
@@ -48,15 +47,30 @@ public class MiniSwitchListener implements ISORequestListener{
             TransactionRequest request = new TransactionRequest(m.getMTI(), m.getString(3), 
                 Long.parseLong(m.getString(4)), m.getString(11), m.getString(41), m.getString(102));
 
-            if (!transactionService.processTransaction(request)) {
-                System.out.println("Transaction validation failed");
-                r.set(39, "12"); // Invalid transaction
-                source.send(r);
-                return true;
-            }
+            TransactionResult result = transactionService.processTransaction(request);
 
-            System.out.println("Transaction processed successfully");
-            r.set(39, "00");
+            switch(result) {
+                case APPROVED:
+                    System.out.println("Transaction approved");
+                    r.set(39, "00");
+                    break;
+                case INVALID_REQUEST:
+                    System.out.println("Invalid transaction request");
+                    r.set(39, "12");
+                    break;
+                case INSUFFICIENT_FUNDS:
+                    System.out.println("Insufficient funds");
+                    r.set(39, "51");
+                    break;
+                case ACCOUNT_NOT_FOUND:
+                    System.out.println("Account not found");
+                    r.set(39, "14");
+                    break;
+                default:
+                    System.out.println("Unknown transaction result");
+                    r.set(39, "96");
+            }
+        
             source.send(r);
             return true;
             
@@ -65,22 +79,8 @@ public class MiniSwitchListener implements ISORequestListener{
             return false;
         } catch (NumberFormatException e) {
             System.out.println("Invalid transaction amount format");
-            try {
-                r.set(39, "12"); // Invalid transaction
-                source.send(r);
-                return true;
-            } catch (ISOException | IOException ex) {
-                ex.printStackTrace();
-                return false;
-            }
+            return false;
         }
-
-        
-        
-
-        
-        
-    
     }
 
 }

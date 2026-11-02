@@ -3,11 +3,13 @@ package dev.miniswitch.miniswitch.corebanking;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.stereotype.Component;
+import dev.miniswitch.miniswitch.corebanking.MockAccount;
+import dev.miniswitch.miniswitch.model.TransactionResult;
 
 @Component
 public class MockCoreBankingAdapter {
 
-    private Map<String, MockAccount> accounts = new HashMap<>();
+    private final Map<String, MockAccount> accounts = new HashMap<>();
 
     public MockCoreBankingAdapter() {
         MockAccount accountOne = new MockAccount("100001",500000);
@@ -17,28 +19,32 @@ public class MockCoreBankingAdapter {
         accounts.put(accountTwo.getAccountNumber(), accountTwo);
     }
 
-    public boolean hasSufficientFunds(String accountNumber, long amount) {
+    public TransactionResult checkDebitEligibility(String accountNumber, long amount) {
         if (amount <= 0) {
-            return false;
+            return TransactionResult.INVALID_REQUEST;
         }
         
         MockAccount account = accounts.get(accountNumber);
 
         if (account == null) {
-            return false;
-        } else {}
+            return TransactionResult.ACCOUNT_NOT_FOUND;
+        }
 
-        return account.getBalance() >= amount;
+        if (account.getBalance() >= amount) {
+            return TransactionResult.APPROVED;
+        } else {
+            return TransactionResult.INSUFFICIENT_FUNDS;
+        }
     }
 
-    public boolean debit(String accountNumber, long amount) {
+    public TransactionResult debit(String accountNumber, long amount) {
         MockAccount account = accounts.get(accountNumber);
+        TransactionResult result = checkDebitEligibility(accountNumber, amount);
 
-        if(this.hasSufficientFunds(accountNumber, amount)) {
+        if(result == TransactionResult.APPROVED) {
             account.setBalance(account.getBalance() - amount);
-            return true;
         }
-        System.out.println("Insufficient funds or invalid account number");
-        return false;
+
+        return result;
     }
 }

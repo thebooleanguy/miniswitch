@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import dev.miniswitch.miniswitch.validation.TransactionValidator;
 import dev.miniswitch.miniswitch.model.TransactionRequest;
 import dev.miniswitch.miniswitch.corebanking.MockCoreBankingAdapter;
+import dev.miniswitch.miniswitch.model.TransactionResult;
 
 @Service 
 public class TransactionService {
@@ -16,9 +17,9 @@ public class TransactionService {
         this.coreBankingAdapter = coreBankingAdapter;
     }
 
-    public boolean processTransaction(TransactionRequest request) {
+    public TransactionResult processTransaction(TransactionRequest request) {
         if (!transactionValidator.isValid(request)) {
-            return false;
+            return TransactionResult.INVALID_REQUEST;
         }
 
         String accountNumber = request.getAccountNumber();
