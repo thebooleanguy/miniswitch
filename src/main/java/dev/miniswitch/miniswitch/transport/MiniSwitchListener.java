@@ -53,15 +53,10 @@ public class MiniSwitchListener implements ISORequestListener{
                 r.set(39, "12"); // Invalid transaction
                 source.send(r);
                 return true;
-            } 
-
-            if (("000000250000".equals(m.getString(4)))) {
-                r.set(39, "00");
-            } else {
-                r.set(39, "05");
-                System.out.println("Transaction amount not accepted");
             }
 
+            System.out.println("Transaction processed successfully");
+            r.set(39, "00");
             source.send(r);
             return true;
             
