@@ -3,16 +3,16 @@ package dev.miniswitch.miniswitch.service;
 import org.springframework.stereotype.Service;
 import dev.miniswitch.miniswitch.validation.TransactionValidator;
 import dev.miniswitch.miniswitch.model.TransactionRequest;
-import dev.miniswitch.miniswitch.corebanking.MockCoreBankingAdapter;
 import dev.miniswitch.miniswitch.model.TransactionResult;
+import dev.miniswitch.miniswitch.corebanking.CoreBankingPort;
 
 @Service 
 public class TransactionService {
 
     private final TransactionValidator transactionValidator;
-    private final MockCoreBankingAdapter coreBankingAdapter;
+    private final CoreBankingPort coreBankingAdapter;
 
-    public TransactionService(TransactionValidator transactionValidator, MockCoreBankingAdapter coreBankingAdapter) {
+    public TransactionService(TransactionValidator transactionValidator, CoreBankingPort coreBankingAdapter) {
         this.transactionValidator = transactionValidator;
         this.coreBankingAdapter = coreBankingAdapter;
     }

@@ -3,11 +3,10 @@ package dev.miniswitch.miniswitch.corebanking;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.stereotype.Component;
-import dev.miniswitch.miniswitch.corebanking.MockAccount;
 import dev.miniswitch.miniswitch.model.TransactionResult;
 
 @Component
-public class MockCoreBankingAdapter {
+public class MockCoreBankingAdapter implements CoreBankingPort  {
 
     private final Map<String, MockAccount> accounts = new HashMap<>();
 
@@ -37,6 +36,7 @@ public class MockCoreBankingAdapter {
         }
     }
 
+    @Override
     public TransactionResult debit(String accountNumber, long amount) {
         MockAccount account = accounts.get(accountNumber);
         TransactionResult result = checkDebitEligibility(accountNumber, amount);
