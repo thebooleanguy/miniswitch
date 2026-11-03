@@ -13,7 +13,7 @@ public class TransactionValidator {
 
         String mti = request.getMti();
         String processingCode = request.getProcessingCode();
-        long transactionAmount = request.getTransactionAmount();
+        String transactionAmount = request.getTransactionAmount();
         String stan = request.getStan();
         String terminalId = request.getTerminalId();
         String accountNumber = request.getAccountNumber();
@@ -27,7 +27,7 @@ public class TransactionValidator {
             return false;
         }
 
-        if(transactionAmount <= 0) {
+        if(transactionAmount == null || !transactionAmount.matches("\\d{12}") || Long.parseLong(transactionAmount) <= 0) {
             return false;
         }
 

@@ -3,13 +3,13 @@ package dev.miniswitch.miniswitch.model;
 public class TransactionRequest {
     private String mti;
     private String processingCode;
-    private long transactionAmount;  // Amount in minor currency units
+    private String transactionAmount;  // Amount in minor currency units
     private String stan;
     private String terminalId;
     private String accountNumber;
     private String destinationBankCode;;
 
-    public TransactionRequest(String mti, String processingCode, long transactionAmount, 
+    public TransactionRequest(String mti, String processingCode, String transactionAmount, 
         String stan, String terminalId, String accountNumber, String destinationBankCode) {
         this.mti = mti;
         this.processingCode = processingCode;
@@ -36,11 +36,11 @@ public class TransactionRequest {
         this.processingCode = processingCode;
     }
 
-    public long getTransactionAmount() {
+    public String getTransactionAmount() {
         return transactionAmount;
     }
 
-    public void setTransactionAmount(long transactionAmount) {
+    public void setTransactionAmount(String transactionAmount) {
         this.transactionAmount = transactionAmount;
     }
 

@@ -34,7 +34,7 @@ public class TransactionService {
         switch (transactionRouter.determineRoute(request)) {
             case ON_US:
                 String accountNumber = request.getAccountNumber();
-                long transactionAmount = request.getTransactionAmount();
+                long transactionAmount = Long.parseLong(request.getTransactionAmount());
                 return coreBankingPort.debit(accountNumber, transactionAmount);
             case OFF_US:
                 return TransactionResult.INVALID_REQUEST; // External routing not implemented yet

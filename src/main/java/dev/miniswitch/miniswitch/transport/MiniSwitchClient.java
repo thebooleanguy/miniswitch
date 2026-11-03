@@ -33,22 +33,23 @@ public class MiniSwitchClient {
         }    
     }
 
-    public static void main(String[] args) throws ISOException {
+    public static void main(String[] args) {
         MiniSwitchClient client = new MiniSwitchClient();
         ISOMsg isoMsg = new ISOMsg();
         isoMsg.setPackager(client.packager);
-
-        isoMsg.setMTI("0200");
-        isoMsg.set(3, "000000");       // Processing Code
-        isoMsg.set(4, "000000250000"); // Transaction Amount
-        isoMsg.set(11, "123456");      // STAN
-        isoMsg.set(41, "TERM1");       // Terminal ID
-        isoMsg.set(102, "100001");       // Account Number
-        isoMsg.set(100, "001001");       // Destination Bank Code
-
         try {
+            isoMsg.setMTI("0200");
+            isoMsg.set(3, "000000");       // Processing Code
+            isoMsg.set(4, "000000250000"); // Transaction Amount
+            isoMsg.set(11, "123456");      // STAN
+            isoMsg.set(41, "TERM1");       // Terminal ID
+            isoMsg.set(102, "100001");       // Account Number
+            isoMsg.set(100, "001001");       // Destination Bank Code
+
             client.sendMessage(isoMsg);
         } catch (SocketException e) {
+            e.printStackTrace();
+        } catch (ISOException e) {
             e.printStackTrace();
         }
     }

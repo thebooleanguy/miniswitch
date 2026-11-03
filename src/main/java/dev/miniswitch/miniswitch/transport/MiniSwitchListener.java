@@ -48,7 +48,7 @@ public class MiniSwitchListener implements ISORequestListener{
 
 
             TransactionRequest request = new TransactionRequest(m.getMTI(), m.getString(3), 
-                Long.parseLong(m.getString(4)), m.getString(11), m.getString(41), 
+                (m.getString(4)), m.getString(11), m.getString(41), 
                 m.getString(102), m.getString(100));
 
             TransactionResult result = transactionService.processTransaction(request);
